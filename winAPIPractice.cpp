@@ -3,6 +3,8 @@
 
 #include "stdafx.h"
 #include "winAPIPractice.h"
+#include <numeric>
+#include <cmath>
 
 #define MAX_LOADSTRING 100
 
@@ -121,6 +123,69 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+void DrawGrid(const HDC & hdc)
+{
+	int startRaw[5] = { 100,200,300,400,500 };
+	int startCol[6] = { 100,200,300,400,500,600 };
+	for (int i : startRaw)
+	{
+		MoveToEx(hdc, 100, i, NULL);
+		LineTo(hdc, 600, i);
+	}
+	for (int i : startCol)
+	{
+		MoveToEx(hdc, i, 100, NULL);
+		LineTo(hdc, i, 500);
+	}
+}
+
+struct Circle
+{
+	int x, y;
+	int pos1X, pos1Y;
+	int pos2X, pos2Y;
+	int r;
+	explicit Circle(int _x, int _y, int _r) : x(_x), y(_y), r(_r)
+	{
+		pos1X = x - r;
+		pos1Y = y - r;
+		pos2X = x + r;
+		pos2Y = y + r;
+	}
+	explicit Circle(int _pos1X, int _pos1Y, int _pos2X, int _pos2Y)
+		: pos1X(_pos1X), pos1Y(_pos1Y), pos2X(_pos2X), pos2Y(_pos2Y)
+	{
+		x = (pos1X + pos2X) / 2;
+		y = (pos1Y + pos2Y) / 2;
+		r = x - pos1X;
+	}
+};
+
+#include <algorithm>
+
+void DrawSunFlower(const HDC & hdc, int x, int y, int r)
+{
+	Circle big_c2(x, y, r - (2 * 3.14 * r / 24));
+	Ellipse(hdc, big_c2.pos1X, big_c2.pos1Y, big_c2.pos2X, big_c2.pos2Y);
+
+	double theta[12]; // = { 30,60,90,120,150,180,210,240,270,300,330,360 };
+	int degree = 30;
+	int angle = 0;
+	std::generate(std::begin(theta), std::end(theta),
+		[&degree, &angle] { angle += degree; return angle; });
+
+	for (auto i : theta)
+	{
+		double rad = i * 3.14 / 180;
+		double sx = cos(rad) * r;
+		double sy = sin(rad) * r;
+		double sr = 2 * 3.14 * r / 24;
+			Circle small_c1(x + sx, y + sy, sr);
+			Ellipse(hdc, small_c1.pos1X, small_c1.pos1Y, small_c1.pos2X, small_c1.pos2Y);
+		
+	}
+}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -147,6 +212,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+			//DrawGrid(hdc);
+			HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+			HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
+			DrawSunFlower(hdc, 300, 300, 200);
+			//Ellipse(hdc,120, 120, 500, 500);
+			SelectObject(hdc, oldBrush);
+			DeleteObject(myBrush);
             EndPaint(hWnd, &ps);
         }
         break;
