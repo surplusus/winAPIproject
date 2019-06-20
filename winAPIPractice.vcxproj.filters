@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\6/20">
+      <UniqueIdentifier>{34e491ac-dc7d-485d-b1b2-a05383f51cb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\6/18">
+      <UniqueIdentifier>{883bb268-396a-4ead-af29-d823ab5f1ba1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -27,19 +33,37 @@
     <ClInclude Include="winAPIPractice.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="TatalFunc.h">
+      <Filter>리소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="winAPIPractice.cpp">
+    <ClCompile Include="WINAPI 기본.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\StartWithBareHand\ex1-1.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\6/18</Filter>
     </ClCompile>
     <ClCompile Include="..\StartWithBareHand\ex2-1.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\6/18</Filter>
+    </ClCompile>
+    <ClCompile Include="Inputarrowrect.cpp">
+      <Filter>소스 파일\6/20</Filter>
+    </ClCompile>
+    <ClCompile Include="MakeStartWithPolygon.cpp">
+      <Filter>소스 파일\6/20</Filter>
+    </ClCompile>
+    <ClCompile Include="windowTextInput.cpp">
+      <Filter>소스 파일\6/20</Filter>
+    </ClCompile>
+    <ClCompile Include="MakeSunflower.cpp">
+      <Filter>소스 파일\6/20</Filter>
+    </ClCompile>
+    <ClCompile Include="MakeRandomPolygon.cpp">
+      <Filter>소스 파일\6/20</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
