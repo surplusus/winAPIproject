@@ -1,7 +1,7 @@
 // winAPIPractice.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
 #include "stdafx.h"
 #include "winAPIPractice.h"
-
+#include "AllFunc.h"
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -97,11 +97,17 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	static int x, y, mx, my;
+	static BOOL Selection;
+	static HBRUSH newbrush = (HBRUSH)CreateSolidBrush(RGB(66, 244, 203));
+	static HBRUSH oldbrush;
+
 	switch (message)
 	{
 	case WM_CREATE:
 	{
-
+		x = 50; y = 50;
+		Selection = FALSE;
 	}
 	break;
 	case WM_COMMAND:
@@ -126,11 +132,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
 		// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-
+		if (Selection)
+		{
+			oldbrush = (HBRUSH)SelectObject(hdc, newbrush);
+			Rectangle(hdc, x - BSIZE, y - BSIZE, x + BSIZE, y + BSIZE);
+			Ellipse(hdc, x - BSIZE, y - BSIZE, x + BSIZE, y + BSIZE);
+		}
+		else
+		{
+			(HBRUSH)SelectObject(hdc, oldbrush);
+			Ellipse(hdc, x - BSIZE, y - BSIZE, x + BSIZE, y + BSIZE);
+		}
 		EndPaint(hWnd, &ps);
 	}
 	break;
+	case WM_LBUTTONDOWN:
+		mx = LOWORD(lParam);
+		my = HIWORD(lParam);
+		if (InCircle(x, y, mx, my))
+			Selection = TRUE;
+		InvalidateRgn(hWnd, NULL, TRUE);
+		break;
+	case WM_LBUTTONUP:
+		Selection = false;
+		InvalidateRgn(hWnd, NULL, TRUE);
+		break;
 	case WM_DESTROY:
+		DeleteObject(newbrush);		// CreateSolidBrush하면 꼭 지워줘야한다.
 		PostQuitMessage(0);
 		break;
 	default:

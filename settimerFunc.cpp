@@ -97,11 +97,31 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	static int x, y;
+	static RECT rectView;
+	static int speed;
+
 	switch (message)
 	{
 	case WM_CREATE:
 	{
-
+		GetClientRect(hWnd, &rectView);
+		x = 20; y = 20;
+		speed = 40;
+		SetTimer(hWnd, 1, 100, NULL);	// (HWND, 호출ID<int>, ms단위초, NULL=WM_TIMER)
+	}
+	break;
+	case WM_TIMER:
+	{
+		switch (wParam)
+		{
+		case 1:
+			x += speed;
+			if (x + 30 > rectView.right)
+				x -= 40;
+			InvalidateRgn(hWnd, NULL, TRUE);
+			break;
+		}
 	}
 	break;
 	case WM_COMMAND:
@@ -126,12 +146,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
 		// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-
+		Ellipse(hdc, x - 30, y - 30, x + 30, y + 30);
 		EndPaint(hWnd, &ps);
 	}
 	break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
+		KillTimer(hWnd, 1);		// SetTimer를 하면 꼭 Killtimer해줘야한다.
 		break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);

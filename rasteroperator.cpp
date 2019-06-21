@@ -1,7 +1,7 @@
 // winAPIPractice.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
 #include "stdafx.h"
 #include "winAPIPractice.h"
-
+#include "AllFunc.h"
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -97,11 +97,20 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	PAINTSTRUCT ps;
+	HDC hdc;
+	static int startX,startY,oldX,oldY;
+	int endX, endY;
+	static BOOL drag;
+	static HBRUSH newbrush = CreateSolidBrush(RGB(66, 244, 203));
+	static HBRUSH oldbrush;
 	switch (message)
 	{
 	case WM_CREATE:
 	{
-
+		startX = oldX = 50; startY = oldY = 50;
+		drag = FALSE;
+		
 	}
 	break;
 	case WM_COMMAND:
@@ -123,14 +132,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_PAINT:
 	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
+		
+		hdc = BeginPaint(hWnd, &ps);
 		// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-
+		Ellipse(hdc, startX, startY, oldX, oldY);
 		EndPaint(hWnd, &ps);
 	}
 	break;
+	case WM_LBUTTONDOWN:
+		drag = TRUE;
+		break;
+	case WM_LBUTTONUP:
+		drag = FALSE;
+		break;
+	case WM_MOUSEMOVE:
+		hdc = GetDC(hWnd);
+		if (drag)
+		{
+			SetROP2(hdc, R2_XORPEN);
+			SelectObject(hdc, (HPEN)GetStockObject(WHITE_PEN));
+			SelectObject(hdc, (HBRUSH)GetStockObject(BLACK_BRUSH));
+			endX = LOWORD(lParam);
+			endY = HIWORD(lParam);
+			Ellipse(hdc, startX, startY, oldX, oldY);
+			Ellipse(hdc, startX, startY, endX, endY);
+			oldX = endX; oldY = endY;
+		}
+		break;
 	case WM_DESTROY:
+		DeleteObject(newbrush);
 		PostQuitMessage(0);
 		break;
 	default:

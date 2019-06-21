@@ -84,26 +84,43 @@ void MakeStar(HDC hdc, int cpoX, int cpoY, int r)
 	Polygon(hdc, p, 10);
 }
 
-struct Circle
+struct PolarPos {
+	int posLTX, posLTY;
+	int posRBX, posRBY;
+
+	PolarPos() {}
+	PolarPos(int x1, int y1, int x2, int y2) :
+		posLTX(x1), posLTY(y1), posRBX(x2), posRBY(y2) {}
+	PolarPos(const PolarPos & p) : 
+		posLTX(p.posLTX), posLTY(p.posLTY), posRBX(p.posRBX), posRBY(p.posRBY) {}
+};
+
+class Circle
 {
 	int x, y;
-	int pos1X, pos1Y;
-	int pos2X, pos2Y;
 	int r;
+	PolarPos xy;
+	bool moveXflag = true;
+	bool moveYflag = true;
+
 	explicit Circle(int _x, int _y, int _r) : x(_x), y(_y), r(_r)
 	{
-		pos1X = x - r;
-		pos1Y = y - r;
-		pos2X = x + r;
-		pos2Y = y + r;
+		xy.posLTX = x - r;
+		xy.posLTY = y - r;
+		xy.posRBX = x + r;
+		xy.posRBY = y + r;
 	}
 	explicit Circle(int _pos1X, int _pos1Y, int _pos2X, int _pos2Y)
-		: pos1X(_pos1X), pos1Y(_pos1Y), pos2X(_pos2X), pos2Y(_pos2Y)
+		: xy(_pos1X, _pos1Y,_pos2X, _pos2Y)
 	{
-		x = (pos1X + pos2X) / 2;
-		y = (pos1Y + pos2Y) / 2;
-		r = x - pos1X;
+		x = (_pos1X + _pos2X) / 2;
+		y = (_pos1Y + _pos2Y) / 2;
+		r = x - _pos1X;
 	}
+	Circle(const Circle & c) : 
+		xy(c.xy), x(c.x), y(c.y), r(c.r) {}
+	void ToggleXflag() { moveXflag = !moveXflag; }
+	void ToggleYflag() { moveYflag = !moveYflag; }
 };
 
 void DrawSunFlower(const HDC & hdc, int x, int y, int r)
@@ -127,4 +144,17 @@ void DrawSunFlower(const HDC & hdc, int x, int y, int r)
 		Ellipse(hdc, small_c1.pos1X, small_c1.pos1Y, small_c1.pos2X, small_c1.pos2Y);
 
 	}
+}
+
+#define BSIZE  40
+double LengthPts(int x1, int y1, int x2, int y2)
+{
+	return (sqrt((float)(x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1)));
+}
+BOOL InCircle(int x, int y, int mx, int my)
+{
+	if (LengthPts(x, y, mx, my) < BSIZE)
+		return TRUE;
+	else
+		return FALSE;
 }

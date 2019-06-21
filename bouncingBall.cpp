@@ -1,7 +1,6 @@
 // winAPIPractice.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
-#include "stdafx.h"
 #include "winAPIPractice.h"
-
+#include "bounceBall.h"
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -95,13 +94,22 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_COMMAND  - 응용 프로그램 메뉴를 처리합니다.
 //  WM_PAINT    - 주 창을 그립니다.
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
+
+// BounceBallPool
+vector<Circle> vall(128);
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	PAINTSTRUCT ps;	HDC hdc;
+	static int mx, my;
+
 	switch (message)
 	{
 	case WM_CREATE:
 	{
-
+		mx = 50; my = 50;
+		InitBallPool();
+		SetTimer(hWnd, 1, 100, NULL);
 	}
 	break;
 	case WM_COMMAND:
@@ -121,16 +129,47 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 	}
 	break;
+	case WM_TIMER:
+	{
+		switch (wParam)
+		{
+		case 1:
+			for (auto& c : vall)
+			{
+				c.Update(hWnd, CList);
+			}
+			InvalidateRgn(hWnd, NULL, TRUE);
+			break;
+		}
+	}
+	break;
+	case WM_LBUTTONDOWN:
+	{
+		mx = LOWORD(lParam);
+		my = HIWORD(lParam);
+		for (int i = 0; i < 128; ++i)
+		{
+			if (vall[1][i] == false)
+			{
+
+			}
+		}
+		vall.push_back(c1);
+		break;
+	}
 	case WM_PAINT:
 	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
-		// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-
+		hdc = BeginPaint(hWnd, &ps);
+		
+		for (auto &c : CList)
+		{
+			Ellipse(hdc, c.xy.posLTX, c.xy.posLTY, c.xy.posRBX, c.xy.posRBY);
+		}
 		EndPaint(hWnd, &ps);
 	}
 	break;
 	case WM_DESTROY:
+		KillTimer(hWnd, 1);
 		PostQuitMessage(0);
 		break;
 	default:

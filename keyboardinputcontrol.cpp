@@ -97,13 +97,20 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	static int x, y;
+	static RECT rectView;
+	static int speed;
+	static bool keyflag;
+	
 	switch (message)
 	{
 	case WM_CREATE:
 	{
-
+		GetClientRect(hWnd, &rectView);
+		x = 20, y = 20;
+		speed = 100;
 	}
-	break;
+	break;	
 	case WM_COMMAND:
 	{
 		int wmId = LOWORD(wParam);
@@ -121,12 +128,42 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 	}
 	break;
+	case WM_KEYDOWN:	// 윈도우 사이즈 변경
+	{
+		if (wParam == VK_LEFT) {
+			x -= speed;
+			if (x - speed < rectView.left)
+				x = 20;
+		}
+		if (wParam == VK_UP) {
+			y -= speed;
+			if (y - speed < rectView.top)
+				y = 20;
+		}
+		if (wParam == VK_RIGHT) {
+			x += speed;
+			if (x + speed > rectView.right)
+				x = rectView.right - 20;
+		}
+		if (wParam == VK_DOWN) {
+			y += speed;
+			if (y + speed > rectView.bottom)
+				y = rectView.bottom-20;
+		}
+		InvalidateRgn(hWnd, NULL, TRUE);
+	}
+	break;
+	case WM_KEYUP:
+	{
+
+	}
+	break;
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
 		// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-
+		Ellipse(hdc, x - 20, y - 20, x + 20, y + 20);
 		EndPaint(hWnd, &ps);
 	}
 	break;
