@@ -22,6 +22,9 @@
     <Filter Include="소스 파일\6/21">
       <UniqueIdentifier>{6c8eb7d5-0a76-45bb-aab4-eff663b9579a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\6/26">
+      <UniqueIdentifier>{cffcbb8a-4b72-49c4-a70b-7934d6494255}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -39,8 +42,14 @@
     <ClInclude Include="AllFunc.h">
       <Filter>리소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="bounceBall.h">
+    <ClInclude Include="resource2.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SNAKE.h">
+      <Filter>소스 파일\6/26</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>소스 파일\6/26</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +98,18 @@
     <ClCompile Include="bouncingBall.cpp">
       <Filter>소스 파일\6/21</Filter>
     </ClCompile>
+    <ClCompile Include="insertMenu.cpp">
+      <Filter>소스 파일\6/26</Filter>
+    </ClCompile>
+    <ClCompile Include="snakeGame.cpp">
+      <Filter>소스 파일\6/26</Filter>
+    </ClCompile>
+    <ClCompile Include="SNAKE.cpp">
+      <Filter>소스 파일\6/26</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>소스 파일\6/26</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="winAPIPractice.rc">
@@ -102,5 +123,10 @@
     <Image Include="winAPIPractice.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="testtest.txt">
+      <Filter>소스 파일\6/26</Filter>
+    </Text>
   </ItemGroup>
 </Project>
