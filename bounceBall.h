@@ -6,11 +6,6 @@
 using std::vector;
 const double PI = atan2(1, 1) * 4;
 
-void InitBallPool()
-{
-
-}
-
 struct PolarPos {
 	int posLTX, posLTY;
 	int posRBX, posRBY;
@@ -43,8 +38,8 @@ public:
 			r = 35;
 		else if (r == 2)
 			r = 50;
-		speedX = rand() % 50;
-		speedY = rand() % 50;
+		speedX = rand() % 30;
+		speedY = rand() % 30;
 		moveXflag = rand() % 2;
 		moveYflag = rand() % 2;
 		xy.posLTX = x - r;

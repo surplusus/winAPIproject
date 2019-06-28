@@ -96,7 +96,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 
 // BounceBallPool
-vector<Circle> vall(128);
+vector<Circle> vall;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -108,7 +108,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 	{
 		mx = 50; my = 50;
-		InitBallPool();
+		
 		SetTimer(hWnd, 1, 100, NULL);
 	}
 	break;
@@ -136,7 +136,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case 1:
 			for (auto& c : vall)
 			{
-				c.Update(hWnd, CList);
+				c.Update(hWnd, vall);
 			}
 			InvalidateRgn(hWnd, NULL, TRUE);
 			break;
@@ -147,13 +147,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		mx = LOWORD(lParam);
 		my = HIWORD(lParam);
-		for (int i = 0; i < 128; ++i)
-		{
-			if (vall[1][i] == false)
-			{
-
-			}
-		}
+		Circle c1(mx, my);
 		vall.push_back(c1);
 		break;
 	}
@@ -161,7 +155,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		hdc = BeginPaint(hWnd, &ps);
 		
-		for (auto &c : CList)
+		for (auto &c : vall)
 		{
 			Ellipse(hdc, c.xy.posLTX, c.xy.posLTY, c.xy.posRBX, c.xy.posRBY);
 		}
