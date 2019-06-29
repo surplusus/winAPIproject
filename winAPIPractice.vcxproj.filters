@@ -26,7 +26,10 @@
       <UniqueIdentifier>{cffcbb8a-4b72-49c4-a70b-7934d6494255}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\6/28">
-      <UniqueIdentifier>{0760abc5-4134-420b-80d4-46cce30cfe55}</UniqueIdentifier>
+      <UniqueIdentifier>{08fb8f9f-e689-4004-9c3c-f3b9d902c4cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\6/28">
+      <UniqueIdentifier>{194253ac-ebd8-420d-a501-c3a4411a6dc7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,8 +51,17 @@
     <ClInclude Include="SNAKE.h">
       <Filter>소스 파일\6/26</Filter>
     </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>헤더 파일\6/28</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCenter.h">
+      <Filter>헤더 파일\6/28</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>헤더 파일\6/28</Filter>
+    </ClInclude>
     <ClInclude Include="Vector2.h">
-      <Filter>소스 파일\6/26</Filter>
+      <Filter>헤더 파일\6/28</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -108,7 +120,19 @@
       <Filter>소스 파일\6/26</Filter>
     </ClCompile>
     <ClCompile Include="Vector2.cpp">
-      <Filter>소스 파일\6/26</Filter>
+      <Filter>소스 파일\6/28</Filter>
+    </ClCompile>
+    <ClCompile Include="ClimbingBall.cpp">
+      <Filter>소스 파일\6/28</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>소스 파일\6/28</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>소스 파일\6/28</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCenter.cpp">
+      <Filter>소스 파일\6/28</Filter>
     </ClCompile>
     <ClCompile Include="callbackprac.cpp">
       <Filter>소스 파일\6/28</Filter>
