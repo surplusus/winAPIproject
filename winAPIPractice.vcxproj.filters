@@ -28,6 +28,9 @@
     <Filter Include="소스 파일\6/28">
       <UniqueIdentifier>{08fb8f9f-e689-4004-9c3c-f3b9d902c4cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\6/28">
+      <UniqueIdentifier>{194253ac-ebd8-420d-a501-c3a4411a6dc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -48,14 +51,17 @@
     <ClInclude Include="SNAKE.h">
       <Filter>소스 파일\6/26</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Ball.h">
+      <Filter>헤더 파일\6/28</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCenter.h">
+      <Filter>헤더 파일\6/28</Filter>
     </ClInclude>
     <ClInclude Include="State.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\6/28</Filter>
     </ClInclude>
-    <ClInclude Include="Ball.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Vector2.h">
+      <Filter>헤더 파일\6/28</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +129,9 @@
       <Filter>소스 파일\6/28</Filter>
     </ClCompile>
     <ClCompile Include="Ball.cpp">
+      <Filter>소스 파일\6/28</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCenter.cpp">
       <Filter>소스 파일\6/28</Filter>
     </ClCompile>
   </ItemGroup>

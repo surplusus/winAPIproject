@@ -1,41 +1,19 @@
-#include "stdafx.h"
-#include "Ball.h"
-#include "State.h"
+ï»¿#include "Ball.h"
 
 BallManager::BallManager()
 {
-	StateInterface* s;
-	s = new VerticalState;
-	states.insert(std::make_pair(Vertical, s));
-	s = new HorizontalState;
-	states.insert(std::make_pair(Horizontal, s));
-	s = new DiagonalState;
-	states.insert(std::make_pair(Diagonal, s));
-
-	activeState = states[Vertical];
 }
 
 BallManager::~BallManager()
 {
-	for (auto b : balls)
-		delete b;
-	balls.clear();
-}
-
-void BallManager::ShiftState(WPARAM wParam)
-{
-	switch (wParam)
+	if (balls.size() != 0)
 	{
-	case 0x31:	// ¼ýÀÚ1
-		activeState = states[Vertical];
-	case 0x32:	// ¼ýÀÚ2
-		activeState = states[Horizontal];
-	case 0x33:	// ¼ýÀÚ3
-		activeState = states[Diagonal];
-	default:
-		break;
+		for (auto b : balls)
+			delete b;
+		balls.clear();
 	}
 }
+
 
 void BallManager::Create(int x, int y)
 {

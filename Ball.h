@@ -40,10 +40,8 @@ public:
 	}
 public:
 	std::list<Ball*> balls;
-	std::map<int, StateInterface*> states;
-	StateInterface* activeState;
+
 public:
-	void ShiftState(WPARAM wParam);
 	void Create(int x, int y);
 };
 

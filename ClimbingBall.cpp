@@ -1,6 +1,7 @@
 // winAPIPractice.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
 #include "stdafx.h"
 #include "winAPIPractice.h"
+#include "GameCenter.h"
 #include "Ball.h"
 
 #define MAX_LOADSTRING 100
@@ -9,7 +10,7 @@
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
-HDC g_hdc; HWND g_hwnd;		// 내가 만든 전역변수
+HDC g_hdc; HWND g_hwnd;	GameCenter *GC;	// 내가 만든 전역변수
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -101,13 +102,16 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_PAINT    - 주 창을 그립니다.
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	
 	BallManager* BM = BallManager::GetInstance();
 	switch (message)
 	{
 	case WM_CREATE:
 	{
+		GC = new GameCenter;
 		MoveWindow(hWnd, 50, 50, 500, 500, TRUE);
 		SetTimer(hWnd, 1, 100, (TIMERPROC)PlusTimer1);
 		SetTimer(hWnd, 2, 100, (TIMERPROC)PlusTimer2);
@@ -141,7 +145,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}	break;
 	case WM_KEYDOWN:
 	{
-		BM->ShiftState(wParam);
+		GC->ShiftState(wParam);
 	}	break;
 	case WM_LBUTTONDOWN:
 	{
@@ -157,6 +161,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		((MINMAXINFO*)lParam)->ptMinTrackSize.y = 500;
 	}	break;
 	case WM_DESTROY:
+		delete GC;
 		BallManager::ReleaseInstance();
 		KillTimer(hWnd,1);
 		KillTimer(hWnd,2);
@@ -190,10 +195,9 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 void CALLBACK PlusTimer1(HWND hWnd, UINT uMsg, UINT idEvent, DWORD time)
 {
-	BallManager* BM = BallManager::GetInstance();
-	
+	GC->activeState->Render(g_hdc);
 }
 void CALLBACK PlusTimer2(HWND hWnd, UINT uMsg, UINT idEvent, DWORD time)
 {
-	BallManager::GetInstance()->activeState->Update();
+	GC->activeState->Update();
 }
