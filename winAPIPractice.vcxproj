@@ -148,11 +148,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="resource2.h" />
-    <ClInclude Include="SNAKE.h" />
+    <ClInclude Include="SNAKE.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Vector2.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="winAPIPractice.h" />
     <ClInclude Include="AllFunc.h" />
   </ItemGroup>
@@ -167,6 +170,11 @@
       <SubType>
       </SubType>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="callbackprac.cpp">
+      <SubType>
+      </SubType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="insertMenu.cpp">
@@ -215,8 +223,12 @@
       </SubType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="SNAKE.cpp" />
-    <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="SNAKE.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="windowTextInput.cpp">
       <SubType>
       </SubType>
@@ -236,7 +248,9 @@
     <ClCompile Include="MakeSunflower.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="snakeGame.cpp" />
+    <ClCompile Include="snakeGame.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="winAPIPractice.rc">
@@ -248,7 +262,9 @@
     <Image Include="winAPIPractice.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="testtest.txt" />
+    <Text Include="testtest.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

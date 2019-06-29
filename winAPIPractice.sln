@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winAPIPractice", "winAPIPra
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BouncingPolygons", "..\BouncingPolygons\BouncingPolygons.vcxproj", "{97B4BADA-9133-4B65-84B5-E850CC2D64C0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TankDefence", "..\TankDefence\TankDefence.vcxproj", "{B186A132-852A-420A-8EA5-660B9AEB3D6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{97B4BADA-9133-4B65-84B5-E850CC2D64C0}.Release|x64.Build.0 = Release|x64
 		{97B4BADA-9133-4B65-84B5-E850CC2D64C0}.Release|x86.ActiveCfg = Release|Win32
 		{97B4BADA-9133-4B65-84B5-E850CC2D64C0}.Release|x86.Build.0 = Release|Win32
+		{B186A132-852A-420A-8EA5-660B9AEB3D6B}.Debug|x64.ActiveCfg = Debug|x64
+		{B186A132-852A-420A-8EA5-660B9AEB3D6B}.Debug|x64.Build.0 = Debug|x64
+		{B186A132-852A-420A-8EA5-660B9AEB3D6B}.Debug|x86.ActiveCfg = Debug|Win32
+		{B186A132-852A-420A-8EA5-660B9AEB3D6B}.Debug|x86.Build.0 = Debug|Win32
+		{B186A132-852A-420A-8EA5-660B9AEB3D6B}.Release|x64.ActiveCfg = Release|x64
+		{B186A132-852A-420A-8EA5-660B9AEB3D6B}.Release|x64.Build.0 = Release|x64
+		{B186A132-852A-420A-8EA5-660B9AEB3D6B}.Release|x86.ActiveCfg = Release|Win32
+		{B186A132-852A-420A-8EA5-660B9AEB3D6B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -25,6 +25,9 @@
     <Filter Include="소스 파일\6/26">
       <UniqueIdentifier>{cffcbb8a-4b72-49c4-a70b-7934d6494255}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\6/28">
+      <UniqueIdentifier>{0760abc5-4134-420b-80d4-46cce30cfe55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -41,9 +44,6 @@
     </ClInclude>
     <ClInclude Include="AllFunc.h">
       <Filter>리소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="resource2.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SNAKE.h">
       <Filter>소스 파일\6/26</Filter>
@@ -109,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="Vector2.cpp">
       <Filter>소스 파일\6/26</Filter>
+    </ClCompile>
+    <ClCompile Include="callbackprac.cpp">
+      <Filter>소스 파일\6/28</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
