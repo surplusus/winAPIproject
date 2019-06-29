@@ -1,5 +1,7 @@
 ﻿#include "Ball.h"
 
+BallManager* BallManager::instance = nullptr;
+
 BallManager::BallManager()
 {
 }
@@ -14,8 +16,7 @@ BallManager::~BallManager()
 	}
 }
 
-
-void BallManager::Create(int x, int y)
+void BallManager::Create(float x, float y)
 {
 	Ball *b = new Ball(x,y);
 	balls.push_back(b);
@@ -35,10 +36,12 @@ bool Ball::CheckCollision()
 
 void Ball::Move()
 {
-	pos += dir;
+	bool toggle = true;
 
-	if (pos.x <= 0 || pos.x >= 500)
+	if (pos.x <= 10 || pos.x >= 440)
 		dir.x = -dir.x;
-	if (pos.y <= 0 || pos.y >= 500)
+	if (pos.y <= 10 || pos.y >= 440)
 		dir.y = -dir.y;
+
+	pos += dir;
 }

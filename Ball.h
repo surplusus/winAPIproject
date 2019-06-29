@@ -16,7 +16,7 @@ public:
 	Vector2 dir;
 	int radius = 20;
 public:
-	Ball(int x, int y) : pos(x, y), dir(0, 0) {}
+	Ball(float _x, float _y) : pos(_x, _y), dir(0, 0) {}
 	bool CheckCollision();
 	void Move();
 };
@@ -42,7 +42,6 @@ public:
 	std::list<Ball*> balls;
 
 public:
-	void Create(int x, int y);
+	void Create(float x, float y);
 };
 
-BallManager* BallManager::instance = nullptr;

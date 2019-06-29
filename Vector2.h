@@ -7,7 +7,7 @@ public:
 	float x;
 	float y;
 	
-	Vector2(float _x = 0, float _y = 0) {} // default para가 기본생성자 대신
+	Vector2(float _x = 0, float _y = 0) : x(_x),y(_y) {} // default para가 기본생성자 대신
 
 	const Vector2 Normalize() const;	// normal vector 구하는 함수
 	float Magnitude() const;	// 벡터 크기 구하는 함수(값은 스칼라)

@@ -1,5 +1,4 @@
 // winAPIPractice.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
-#include "stdafx.h"
 #include "winAPIPractice.h"
 #include "GameCenter.h"
 #include "Ball.h"
@@ -90,6 +89,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	{
 		return FALSE;
 	}
+	GC = new GameCenter;
 	g_hwnd = hWnd;
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
@@ -106,12 +106,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	
-	BallManager* BM = BallManager::GetInstance();
 	switch (message)
 	{
 	case WM_CREATE:
 	{
-		GC = new GameCenter;
+		
 		MoveWindow(hWnd, 50, 50, 500, 500, TRUE);
 		SetTimer(hWnd, 1, 100, (TIMERPROC)PlusTimer1);
 		SetTimer(hWnd, 2, 100, (TIMERPROC)PlusTimer2);
@@ -140,7 +139,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
 		// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-
+		GC->activeState->Render(g_hdc);
 		EndPaint(hWnd, &ps);
 	}	break;
 	case WM_KEYDOWN:
@@ -149,9 +148,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}	break;
 	case WM_LBUTTONDOWN:
 	{
-		int mx = LOWORD(lParam);
-		int my = HIWORD(lParam);
-		BM->Create(mx, my);
+		float mx = LOWORD(lParam);
+		float my = HIWORD(lParam);
+		BallManager::GetInstance()->Create(mx, my);
 	}	break;
 	case WM_GETMINMAXINFO:
 	{
@@ -195,7 +194,8 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 void CALLBACK PlusTimer1(HWND hWnd, UINT uMsg, UINT idEvent, DWORD time)
 {
-	GC->activeState->Render(g_hdc);
+	InvalidateRgn(hWnd, NULL, TRUE);
+	
 }
 void CALLBACK PlusTimer2(HWND hWnd, UINT uMsg, UINT idEvent, DWORD time)
 {

@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 
 class StateInterface
 {
@@ -8,16 +9,19 @@ public:
 };
 
 class HorizontalState : public StateInterface {
+public:
 	virtual void Update();
 	virtual void Render(const HDC & hdc);
 };
 
 class VerticalState : public StateInterface {
+public:
 	virtual void Update();
 	virtual void Render(const HDC & hdc);
 };
 
 class DiagonalState : public StateInterface {
+public:
 	virtual void Update();
 	virtual void Render(const HDC & hdc);
 };

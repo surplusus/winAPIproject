@@ -134,9 +134,6 @@
     <ClCompile Include="GameCenter.cpp">
       <Filter>소스 파일\6/28</Filter>
     </ClCompile>
-    <ClCompile Include="callbackprac.cpp">
-      <Filter>소스 파일\6/28</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="winAPIPractice.rc">

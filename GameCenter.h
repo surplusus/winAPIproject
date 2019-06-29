@@ -2,6 +2,7 @@
 #include <map>
 #include "State.h"
 
+class Ball;
 class BallManager;
 
 class GameCenter

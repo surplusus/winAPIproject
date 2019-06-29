@@ -1,6 +1,5 @@
 #include "State.h"
 #include "Ball.h"
-#include <Windows.h>
 
 #define HOTRED RGB(245, 66, 105)
 #define MINT RGB(64, 237, 159)
@@ -13,8 +12,6 @@ void VerticalState::Update()
 	BallManager* BM = BallManager::GetInstance();
 	for (auto b : BM->balls)
 	{
-		b->dir.x = 0;
-		b->dir.y = 10;
 		b->Move();
 		b->CheckCollision();
 	}
@@ -45,8 +42,6 @@ void HorizontalState::Update()
 	BallManager* BM = BallManager::GetInstance();
 	for (auto b : BM->balls)
 	{
-		b->dir.x = 10;
-		b->dir.y = 0;
 		b->Move();
 		b->CheckCollision();
 	}
@@ -77,8 +72,6 @@ void DiagonalState::Update()
 	BallManager* BM = BallManager::GetInstance();
 	for (auto b : BM->balls)
 	{
-		b->dir.x = 10;
-		b->dir.y = 10;
 		b->Move();
 		b->CheckCollision();
 	}
