@@ -29,6 +29,9 @@ private:
 	std::vector<STONE> W_stn;
 	std::vector<STONE> B_stn;
 public:
+	StoneMgr();
+	~StoneMgr() {}
+public:
 	void PutStone(POINT pos, int color);
 	void Draw(HDC &hdc);
 };

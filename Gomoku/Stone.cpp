@@ -1,6 +1,13 @@
 #include "stdafx.h"
 #include "Stone.h"
 
+StoneMgr::StoneMgr()
+{
+	W_stn.resize(0);
+	B_stn.resize(0);
+
+}
+
 void StoneMgr::PutStone(POINT pos, int color)
 {
 	int x = (pos.x - BoardStartX) / BasicPxl;

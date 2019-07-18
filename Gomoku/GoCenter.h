@@ -16,7 +16,7 @@ public:
 		if (!Instance)
 			Instance = new GoCenter;
 		return Instance;	}
-	static void Release() {
+	static void ReleaseInstance() {
 		delete Instance;	}
 
 private:
@@ -28,6 +28,7 @@ public:
 	void Init();
 	void Update(const POINT &pt);
 	void Render(HDC &hdc);
+	void Release();
 public:
 	void SetInputPos(POINT pt);
 };

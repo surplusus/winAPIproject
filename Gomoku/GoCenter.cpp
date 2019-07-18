@@ -16,19 +16,24 @@ void GoCenter::Init()
 
 void GoCenter::Update(const POINT &pt)
 {
+	if (rule_->GetCountPut() == 0)
+		(rule_->*rule_->Func)();
 	// int c = BLACK or WHITE;
 	SetInputPos(pt);
-
-	POINT p1 = { 4,4 };
-	POINT p2 = { 5,14 };
-	stones_->PutStone(p1, BLACK);
-	stones_->PutStone(p2, WHITE);
+	stones_->PutStone(inputPos_, BLACK);
 }
 
 void GoCenter::Render(HDC &hdc)
 {
 	board_->Draw(hdc);
 	stones_->Draw(hdc);
+}
+
+void GoCenter::Release()
+{
+	delete rule_;
+	delete board_;
+	delete stones_;
 }
 
 void GoCenter::SetInputPos(POINT pt)
