@@ -6,7 +6,7 @@
 #include <WS2tcpip.h>
 #include <tchar.h>
 #include <stdio.h>
-
+//
 #pragma comment (lib, "ws2_32.lib")
 
 #define MAX_LOADSTRING 100

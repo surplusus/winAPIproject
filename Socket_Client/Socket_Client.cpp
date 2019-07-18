@@ -7,7 +7,7 @@
 #include <WS2tcpip.h>
 #include <WinSock2.h>
 #pragma comment (lib, "ws2_32.lib")
-
+//
 #define MAX_LOADSTRING 100
 #define WM_ASYNC WM_USER+2
 // 전역 변수:
