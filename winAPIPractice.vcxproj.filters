@@ -31,6 +31,18 @@
     <Filter Include="헤더 파일\6/28">
       <UniqueIdentifier>{194253ac-ebd8-420d-a501-c3a4411a6dc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\7/2">
+      <UniqueIdentifier>{c91f71fb-cb7c-48c9-8f4f-7e305d7580ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\image">
+      <UniqueIdentifier>{aa6f245e-6a6b-4b48-8b6b-7bb72b778df1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\7/9">
+      <UniqueIdentifier>{88ccb521-7629-421d-a43f-bba1f116a5c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\7/17">
+      <UniqueIdentifier>{9abeb9ff-d6b3-4813-aded-3bad72b3a29e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -134,6 +146,18 @@
     <ClCompile Include="GameCenter.cpp">
       <Filter>소스 파일\6/28</Filter>
     </ClCompile>
+    <ClCompile Include="..\ImageUpload\4directionwalk.cpp">
+      <Filter>소스 파일\7/2</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageUpload.cpp">
+      <Filter>소스 파일\7/2</Filter>
+    </ClCompile>
+    <ClCompile Include="multithread.cpp">
+      <Filter>소스 파일\7/9</Filter>
+    </ClCompile>
+    <ClCompile Include="fileIO.cpp">
+      <Filter>소스 파일\7/17</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="winAPIPractice.rc">
@@ -146,6 +170,21 @@
     </Image>
     <Image Include="winAPIPractice.ico">
       <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="images\magenta.bmp">
+      <Filter>리소스 파일\image</Filter>
+    </Image>
+    <Image Include="images\sigong.bmp">
+      <Filter>리소스 파일\image</Filter>
+    </Image>
+    <Image Include="images\walkingImage.bmp">
+      <Filter>리소스 파일\image</Filter>
+    </Image>
+    <Image Include="images\zero_run.bmp">
+      <Filter>리소스 파일\image</Filter>
+    </Image>
+    <Image Include="images\수지.bmp">
+      <Filter>리소스 파일\image</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
