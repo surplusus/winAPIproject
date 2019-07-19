@@ -16,8 +16,7 @@ void GoCenter::Init()
 
 void GoCenter::Update(const POINT &pt)
 {
-	if (rule_->GetCountPut() == 0)
-		(rule_->*rule_->Func)();
+	rule_->ChangeTurn();
 	// int c = BLACK or WHITE;
 	SetInputPos(pt);
 	stones_->PutStone(inputPos_, BLACK);
@@ -38,6 +37,7 @@ void GoCenter::Release()
 
 void GoCenter::SetInputPos(POINT pt)
 {
+
 	inputPos_.x = pt.x;
 	inputPos_.y = pt.y;
 }

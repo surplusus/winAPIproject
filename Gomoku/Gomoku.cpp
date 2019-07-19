@@ -2,8 +2,18 @@
 #include "stdafx.h"
 #include "Gomoku.h"
 #include "GoCenter.h"
+#include "Client.h"
+
+#ifdef _DEBUG
+#ifdef UNICODE
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console") 
+#else
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console") 
+#endif
+#endif // _DEBUG
 
 #define MAX_LOADSTRING 100
+using namespace Gomoku;
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
@@ -93,14 +103,18 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	/////////// 변수 선언///////////{
 	static TCHAR szBuff[64];
 	TRACKMOUSEEVENT tme;
 	static TCHAR Mes[256];
 	static BOOL bIn = FALSE;
+	static Client client("127.0.0.1", 8000);
+	///////////////////////////////}
     switch (message)
     {
 		case WM_CREATE:
 		{
+			client.Connect();
 			GC = GoCenter::GetInstance();
 			GC->Init();
 			MoveWindow(hWnd, 10, 10, 700, 700,TRUE);
@@ -150,7 +164,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}	break;
 		case WM_DESTROY:
 		{
+			client.Disconnect();
 			PostQuitMessage(0);
+			GC->Release();
+			GC->ReleaseInstance();
 		}	break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);

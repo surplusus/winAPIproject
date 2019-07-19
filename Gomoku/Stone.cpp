@@ -10,6 +10,8 @@ StoneMgr::StoneMgr()
 
 void StoneMgr::PutStone(POINT pos, int color)
 {
+	pos.x += BasicPxl / 2;
+	pos.y += BasicPxl / 2;
 	int x = (pos.x - BoardStartX) / BasicPxl;
 	int y = (pos.y - BoardStartY) / BasicPxl;
 
@@ -29,6 +31,7 @@ void StoneMgr::Draw(HDC &hdc)
 	{
 		Ellipse(hdc, (*it).cx - CirSize, (*it).cy - CirSize,
 			(*it).cx + CirSize, (*it).cy + CirSize);
+		it++;
 	}
 	HBRUSH Bbrush = CreateSolidBrush(RGB(0, 0, 0));
 	SelectObject(hdc, Bbrush);
@@ -37,6 +40,7 @@ void StoneMgr::Draw(HDC &hdc)
 	{
 		Ellipse(hdc, (*it).cx - CirSize, (*it).cy - CirSize,
 			(*it).cx + CirSize, (*it).cy + CirSize);
+		it++;
 	}
 	SelectObject(hdc, oldbrush);
 	DeleteObject(Wbrush);
