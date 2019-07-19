@@ -1,8 +1,11 @@
 #pragma once
+#include <vector>
 class RuleMgr;
 class Board;
 class Stone;
 class StoneMgr;
+class Renderer;
+class GameObj;
 
 class GoCenter
 {
@@ -23,13 +26,19 @@ private:
 	RuleMgr* rule_ = nullptr;
 	Board* board_ = nullptr;
 	StoneMgr* stones_ = nullptr;
+	Renderer* render_ = nullptr;
 	POINT inputPos_ = { 0,0 };
+	bool IsAllInited = false;
 public:
 	void Init();
-	void Update(const POINT &pt);
-	void Render(HDC &hdc);
+	void Update();
 	void Release();
 public:
-	void SetInputPos(POINT pt);
+	void SetInputPos();
+	bool IsAllInitiated() { return IsAllInited; }
+	const Board* GetBoard() { return board_; }
+	StoneMgr* GetStones() { return stones_; }
+	const POINT& GetInputPos() { return inputPos_; }
+	std::vector<GameObj*> GetGameObjects();
 };
 

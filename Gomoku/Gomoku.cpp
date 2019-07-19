@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "Gomoku.h"
 #include "GoCenter.h"
+#include "Renderer.h"
 #include "Client.h"
 
 #ifdef _DEBUG
@@ -20,6 +21,7 @@ HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 GoCenter* GC;
+HWND g_hwnd;
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -47,19 +49,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GOMOKU));
-
+	////////메시지 루프 전 한번만 해야할일///////
     MSG msg;
-
-    // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
-
+	msg.message = NULL;
+	GC = GoCenter::GetInstance();
+	GC->Init();
+	Renderer R;
+    
+	// 기본 메시지 루프입니다:
+	while (msg.message != WM_QUIT)
+	{
+		// 메시지가 있으면 true 리턴
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		else
+		{
+			GC->Update();
+			R.Render();
+		}
+	}
+	GC->Release();
+	GC->ReleaseInstance();
     return (int) msg.wParam;
 }
 ATOM MyRegisterClass(HINSTANCE hInstance)
@@ -88,7 +101,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
+   g_hwnd = hWnd;
    if (!hWnd)
    {
       return FALSE;
@@ -100,7 +113,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 //
-//
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	/////////// 변수 선언///////////{
@@ -108,16 +120,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	TRACKMOUSEEVENT tme;
 	static TCHAR Mes[256];
 	static BOOL bIn = FALSE;
-	static Client client("127.0.0.1", 8000);
+	//static Client client("127.0.0.1", 8000);
+	RECT rectView;
 	///////////////////////////////}
     switch (message)
     {
 		case WM_CREATE:
 		{
-			client.Connect();
-			GC = GoCenter::GetInstance();
-			GC->Init();
-			MoveWindow(hWnd, 10, 10, 700, 700,TRUE);
+			MoveWindow(hWnd, 10, 10, 710, 710, TRUE);
+			GetClientRect(hWnd, &rectView);
 		}	break;
 		case WM_COMMAND:
 			{
@@ -140,7 +151,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			POINT pt;
 			GetCursorPos(&pt);
 			ScreenToClient(hWnd, &pt);
-			GC->Update(pt);
 			wsprintf(szBuff, _T("=== 마우스 좌표 :: X : %d / Y : %d ==="), pt.x, pt.y);
 			InvalidateRgn(hWnd, NULL, TRUE);
 		}	break;
@@ -151,8 +161,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 				TextOut(hdc, 10, 620, szBuff, _tcslen(szBuff));
 				TextOut(hdc, 10, 600, Mes, _tcslen(Mes));
-
-				GC->Render(hdc);
 				EndPaint(hWnd, &ps);
 			}        break;
 		case WM_GETMINMAXINFO:
@@ -164,10 +172,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}	break;
 		case WM_DESTROY:
 		{
-			client.Disconnect();
 			PostQuitMessage(0);
-			GC->Release();
-			GC->ReleaseInstance();
 		}	break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);

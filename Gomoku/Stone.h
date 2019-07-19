@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Basic_Value.h"
+#include "GameObj.h"
 
 typedef struct _Stone
 {
@@ -23,15 +24,16 @@ typedef struct _Stone
 	}
 }STONE;
 
-class StoneMgr
+class StoneMgr : public GameObj
 {
 private:
-	std::vector<STONE> W_stn;
-	std::vector<STONE> B_stn;
+	POINT pos_;
+	int color_;
 public:
 	StoneMgr();
-	~StoneMgr() {}
+	virtual ~StoneMgr() = default;
 public:
-	void PutStone(POINT pos, int color);
-	void Draw(HDC &hdc);
+	void PutStone();
+	virtual void Draw(HDC &hdc);
+	virtual void Update();
 };

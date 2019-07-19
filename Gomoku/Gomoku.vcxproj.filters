@@ -33,9 +33,6 @@
     <ClInclude Include="Board.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Render.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="GoCenter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -46,6 +43,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Client.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObj.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -65,13 +71,16 @@
     <ClCompile Include="Stone.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Render.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GoCenter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Client.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -85,6 +94,9 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="Gomoku.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="img\background.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

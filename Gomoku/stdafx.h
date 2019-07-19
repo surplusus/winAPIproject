@@ -27,3 +27,8 @@
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
+
+#include "Basic_Value.h"
+#include "GoCenter.h"
+#include "Renderer.h"
+extern HWND g_hwnd;

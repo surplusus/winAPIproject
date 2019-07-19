@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GoCenter.h"
+#include "GameObj.h"
 #include "RuleMgr.h"
 #include "Board.h"
 #include "Stone.h"
@@ -12,20 +13,25 @@ void GoCenter::Init()
 	rule_ = new RuleMgr;
 	board_ = new Board;
 	stones_ = new StoneMgr;
+	render_ = new Renderer;
+	IsAllInited = true;
 }
 
-void GoCenter::Update(const POINT &pt)
+void GoCenter::Update()
 {
+	if (!IsAllInited)
+		return;
+
+	SetInputPos();
+	auto list_obj = GetGameObjects();
+	for (int i = 0; i < list_obj.size(); ++i)
+	{
+		list_obj[i]->Update();
+	}
 	rule_->ChangeTurn();
 	// int c = BLACK or WHITE;
-	SetInputPos(pt);
+	
 	stones_->PutStone(inputPos_, BLACK);
-}
-
-void GoCenter::Render(HDC &hdc)
-{
-	board_->Draw(hdc);
-	stones_->Draw(hdc);
 }
 
 void GoCenter::Release()
@@ -35,9 +41,21 @@ void GoCenter::Release()
 	delete stones_;
 }
 
-void GoCenter::SetInputPos(POINT pt)
+void GoCenter::SetInputPos()
 {
+	if (GetAsyncKeyState(VK_LBUTTON))
+	{
+		GetCursorPos(&inputPos_);
+		ScreenToClient(g_hwnd, &inputPos_);
+	}
+	
+}
 
-	inputPos_.x = pt.x;
-	inputPos_.y = pt.y;
+std::vector<GameObj*> GoCenter::GetGameObjects()
+{
+	std::vector<GameObj*> list;
+	list.push_back((GameObj*)board_); 
+	list.push_back((GameObj*)stones_); 
+	list.push_back((GameObj*)rule_); 
+	return list;
 }

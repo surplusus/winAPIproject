@@ -1,10 +1,11 @@
 #pragma once
-class Board
+class Board : public GameObj
 {
 public:
 	Board();
-	~Board();
+	virtual ~Board();
 public:
-	void Draw(HDC &hdc);
+	virtual void Draw(HDC &hdc);
+	virtual void Update() {}
 };
 

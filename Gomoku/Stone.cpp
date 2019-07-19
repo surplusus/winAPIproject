@@ -1,21 +1,21 @@
 #include "stdafx.h"
 #include "Stone.h"
+#include "GoCenter.h"
 
 StoneMgr::StoneMgr()
 {
 	W_stn.resize(0);
 	B_stn.resize(0);
-
 }
 
-void StoneMgr::PutStone(POINT pos, int color)
+void StoneMgr::PutStone()
 {
-	pos.x += BasicPxl / 2;
-	pos.y += BasicPxl / 2;
-	int x = (pos.x - BoardStartX) / BasicPxl;
-	int y = (pos.y - BoardStartY) / BasicPxl;
+	pos_.x += BasicPxl / 2;
+	pos_.y += BasicPxl / 2;
+	int x = (pos_.x - BoardStartX) / BasicPxl;
+	int y = (pos_.y - BoardStartY) / BasicPxl;
 
-	STONE stn(x, y, color, true);
+	STONE stn(x, y, color_, true);
 	if (stn.color == BLACK)
 		B_stn.push_back(stn);
 	if (stn.color == WHITE)
@@ -45,4 +45,11 @@ void StoneMgr::Draw(HDC &hdc)
 	SelectObject(hdc, oldbrush);
 	DeleteObject(Wbrush);
 	DeleteObject(Bbrush);
+}
+
+void StoneMgr::Update()
+{
+	pos_ = GoCenter::GetInstance()->GetInputPos();
+	// 룰 에게서 색 가져오기
+	PutStone()
 }
