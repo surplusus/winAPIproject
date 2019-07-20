@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Board.h"
-#include "Basic_Value.h"
 
 Board::Board()
 {
@@ -8,6 +7,11 @@ Board::Board()
 
 Board::~Board()
 {
+}
+
+void Board::Init()
+{
+	Subject::Notify(TYPE_EVENT::T_INIT);
 }
 
 void Board::Draw(HDC & hdc)

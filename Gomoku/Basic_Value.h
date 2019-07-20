@@ -8,3 +8,4 @@ const int BasicPxl = 30;
 const int CirSize = 13;
 
 enum TYPE_COL { NONE=0, BLACK, WHITE };
+enum TYPE_EVENT {T_INIT = 0, T_RENDER, T_UPDATE, T_PUTSTONE};

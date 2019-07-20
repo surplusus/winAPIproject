@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "RuleMgr.h"
 
-
 RuleMgr::RuleMgr()
 {
 }
@@ -19,6 +18,32 @@ int RuleMgr::ChangeTurn()
 		func = &RuleMgr::TurnWhiteOn;
 
 	return (this->*func)();
+}
+
+bool RuleMgr::Judge(const POINT stn_pos)
+{
+	auto W_iter = GameObj::W_stn;
+	auto B_iter = GameObj::B_stn;
+	for (auto W : GameObj::W_stn)
+	{
+		RECT *re = &(W.rect_);
+		if (PtInRect(re, stn_pos))
+			return false;
+	}
+
+	for (auto B : GameObj::B_stn)
+	{
+		RECT *re = &(B.rect_);
+		if (PtInRect(re, stn_pos))
+			return false;
+	}
+
+	return true;
+}
+
+void RuleMgr::Init()
+{
+	Subject::Notify(TYPE_EVENT::T_INIT);
 }
 
 int RuleMgr::TurnBlackOn()

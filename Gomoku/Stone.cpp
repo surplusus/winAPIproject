@@ -1,25 +1,57 @@
 #include "stdafx.h"
 #include "Stone.h"
-#include "GoCenter.h"
+
+std::vector<STONE> GameObj::B_stn;
+std::vector<STONE> GameObj::W_stn;
 
 StoneMgr::StoneMgr()
 {
-	W_stn.resize(0);
-	B_stn.resize(0);
+	GameObj::W_stn.resize(0);
+	GameObj::B_stn.resize(0);
 }
 
 void StoneMgr::PutStone()
 {
-	pos_.x += BasicPxl / 2;
-	pos_.y += BasicPxl / 2;
-	int x = (pos_.x - BoardStartX) / BasicPxl;
-	int y = (pos_.y - BoardStartY) / BasicPxl;
-
-	STONE stn(x, y, color_, true);
+	// 룰 에게서 색 가져오기
+// test
+	if (color_ == BLACK)
+		color_ = WHITE;
+	else
+		color_ = BLACK;
+	//
+	STONE stn(coordBrd_.x, coordBrd_.y, color_, true);
 	if (stn.color == BLACK)
 		B_stn.push_back(stn);
 	if (stn.color == WHITE)
 		W_stn.push_back(stn);
+}
+
+bool StoneMgr::TurnOnYou()
+{
+	isOnTurn = !isOnTurn;
+	return isOnTurn;
+}
+
+void StoneMgr::SetStonePos()
+{
+	POINT p = GoCenter::GetInstance()->GetInputPos();
+	if (0 < p.x && 0 < p.y && p.x < 580 && p.y < 580)
+	{
+		pos_.x = p.x;
+		pos_.y = p.y;
+		coordBrd_.x = pos_.x - BoardStartX + (BasicPxl / 2);
+		coordBrd_.y = pos_.y - BoardStartY + (BasicPxl / 2);
+		coordBrd_.x /= BasicPxl;
+		coordBrd_.y /= BasicPxl;
+		onNewPos = true;
+	}
+}
+
+void StoneMgr::Init()
+{
+	W_stn.resize(0);
+	B_stn.resize(0);
+	Subject::Notify(TYPE_EVENT::T_INIT);
 }
 
 void StoneMgr::Draw(HDC &hdc)
@@ -49,7 +81,15 @@ void StoneMgr::Draw(HDC &hdc)
 
 void StoneMgr::Update()
 {
-	pos_ = GoCenter::GetInstance()->GetInputPos();
-	// 룰 에게서 색 가져오기
-	PutStone()
+	SetStonePos();
+	
+	if (onNewPos)
+	{
+		Subject::Notify(TYPE_EVENT::T_PUTSTONE);
+		if (isOnTurn) {
+			PutStone();
+			isOnTurn = false;
+		}
+		onNewPos = false;
+	}
 }

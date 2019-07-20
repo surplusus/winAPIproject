@@ -13,7 +13,7 @@ public:
 	MyBitMap() {}
 	~MyBitMap();
 public:
-	MyBitMap* LoadBmp(LPWSTR pFileName);
+	MyBitMap* LoadBmp(LPCWSTR pFileName);
 	HDC& GetMemDC() { return hMemDC_; }
 	const BITMAP GetBitMapImage() { return bitmapImage_; }
 };
@@ -21,17 +21,15 @@ public:
 class Renderer
 {
 public:
-	Renderer() {}
+	Renderer() { Init(); }
 	~Renderer() {}
 private:
 	GoCenter* GC;
 	HDC hdc_;
 	MyBitMap* backBuffer;
 	MyBitMap* BackGround;
-	bool IsAllInited = false;
 public:
 	void Init();
 	void Render();
-	bool IsAllInitiated() { return IsAllInited; }
 };
 

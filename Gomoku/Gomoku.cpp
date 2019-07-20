@@ -21,6 +21,7 @@ HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 GoCenter* GC;
+Renderer* R;
 HWND g_hwnd;
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -53,8 +54,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
 	msg.message = NULL;
 	GC = GoCenter::GetInstance();
+	R = new Renderer;
+	R->Init();
 	GC->Init();
-	Renderer R;
     
 	// 기본 메시지 루프입니다:
 	while (msg.message != WM_QUIT)
@@ -68,7 +70,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		else
 		{
 			GC->Update();
-			R.Render();
+			R->Render();
 		}
 	}
 	GC->Release();
@@ -118,7 +120,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	/////////// 변수 선언///////////{
 	static TCHAR szBuff[64];
 	TRACKMOUSEEVENT tme;
-	static TCHAR Mes[256];
 	static BOOL bIn = FALSE;
 	//static Client client("127.0.0.1", 8000);
 	RECT rectView;
@@ -146,21 +147,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					return DefWindowProc(hWnd, message, wParam, lParam);
 				}
 			}        break;
-		case WM_LBUTTONDOWN:
+		/*case WM_LBUTTONDOWN:
 		{
 			POINT pt;
 			GetCursorPos(&pt);
 			ScreenToClient(hWnd, &pt);
 			wsprintf(szBuff, _T("=== 마우스 좌표 :: X : %d / Y : %d ==="), pt.x, pt.y);
+			GC->GetInputPos(pt);
 			InvalidateRgn(hWnd, NULL, TRUE);
-		}	break;
+		}	break;*/
 		case WM_PAINT:
 			{
 				PAINTSTRUCT ps;
 				HDC hdc = BeginPaint(hWnd, &ps);
 				// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-				TextOut(hdc, 10, 620, szBuff, _tcslen(szBuff));
-				TextOut(hdc, 10, 600, Mes, _tcslen(Mes));
+				//TextOut(hdc, 10, 620, szBuff, _tcslen(szBuff));
 				EndPaint(hWnd, &ps);
 			}        break;
 		case WM_GETMINMAXINFO:
