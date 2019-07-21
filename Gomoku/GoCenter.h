@@ -42,9 +42,11 @@ private:
 	StoneMgr* stones_ = nullptr;
 	Renderer* render_ = nullptr;
 private:	// internal temporary variable
-	POINT inputPos_ = { 0,0 };
-	POINT mousePos = { 0,0 };
+	POINT inputPos_ = { -1,-1 };
+	POINT mousePos = { -1,-1 };
 	HDC hdc_;
+	UINT isEnd = 0;
+	PACKET packet_;
 public:
 	void Init();
 	void Update();
@@ -52,10 +54,13 @@ public:
 	void Release();
 	virtual void onNotify(const Subject* entity, TYPE_EVENT event);
 public:
+	void SetPacket(PACKET p) { packet_ = p; }
+	PACKET& GetPacket() { return packet_; }
 	void SetInputPos();
 	const POINT& GetInputPos() { return inputPos_; }
-	/*const Board* GetBoard() { return board_; }
-	StoneMgr* GetStones() { return stones_; }*/
 	std::vector<GameObj*> GetGameObjects();
+	void EndSignal(TYPE_COL win_stn_col);
+	void EndMessagePopup();
+	bool HasMessage();
 };
 

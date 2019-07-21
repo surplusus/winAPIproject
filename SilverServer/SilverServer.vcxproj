@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Board.cpp" />
     <ClCompile Include="main.cpp">
       <SubType>
       </SubType>
@@ -123,6 +124,7 @@
     <ClCompile Include="SilverServer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Board.h" />
     <ClInclude Include="Packet.h" />
     <ClInclude Include="SilverServer.h" />
   </ItemGroup>

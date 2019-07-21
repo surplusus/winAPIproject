@@ -1,5 +1,6 @@
 #include "SilverServer.h"
 #include "Packet.h"
+#include "Board.h"
 #include <Windows.h>
 #include <iostream>
 #include <stdexcept>
@@ -141,6 +142,9 @@ namespace Gomoku {
 		{
 			// 데이터를 받았으니 무슨 처리를 한다
 			// 오목 게임 룰 연산을 담당한다
+			static Board* board = new Board;
+			board->ExstractMsgFromChar(packet->buffer.buf);
+			board->ImportMsgToChar(packet);
 			cout << packet->buffer.buf << endl;
 			WSASend(packet->socket, &packet->buffer, 1, &sentBytes, 0, lpOverLapped, SendRoutine);
 		}

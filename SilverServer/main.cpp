@@ -1,4 +1,5 @@
 #include "SilverServer.h"
+#include "Board.h"
 #include <iostream>
 #include <string>
 #include <thread>

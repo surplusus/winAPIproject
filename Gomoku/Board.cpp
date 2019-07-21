@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "Board.h"
 
-Board::Board()
-{
-}
-
 Board::~Board()
 {
 }
@@ -41,4 +37,5 @@ void Board::Draw(HDC & hdc)
 	
 	SelectObject(hdc, oldbrush);
 	DeleteObject(hbrush);
+	Subject::Notify(TYPE_EVENT::T_RENDER);
 }

@@ -150,11 +150,12 @@
     <ClInclude Include="Basic_Value.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Client.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="GameObj.h" />
     <ClInclude Include="GoCenter.h" />
     <ClInclude Include="Gomoku.h" />
+    <ClInclude Include="Packet.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RuleMgr.h" />
@@ -166,7 +167,7 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Client.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GoCenter.cpp" />
     <ClCompile Include="Gomoku.cpp" />

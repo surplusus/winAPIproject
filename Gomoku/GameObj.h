@@ -34,18 +34,18 @@ typedef struct _Stone
 	_Stone(int _x, int _y) : x(_y), y(_y) {
 		cx = BoardStartX + x * BasicPxl;
 		cy = BoardStartY + y * BasicPxl;
-		rect_.left = cx;
-		rect_.top = cy;
-		rect_.right = cx + BasicPxl;
-		rect_.bottom= cy + BasicPxl;
+		rect_.left = cx - (BasicPxl / 2);
+		rect_.top = cy - (BasicPxl / 2);
+		rect_.right = cx + BasicPxl - (BasicPxl / 2);
+		rect_.bottom= cy + BasicPxl - (BasicPxl / 2);
 	}
 	_Stone(int _x, int _y, int _color, bool _check) : x(_x), y(_y), check(_check), color(_color) {
 		cx = BoardStartX + x * BasicPxl;
 		cy = BoardStartY + y * BasicPxl;
-		rect_.left = cx;
-		rect_.top = cy;
-		rect_.right = cx + BasicPxl;
-		rect_.bottom = cy + BasicPxl;
+		rect_.left = cx - (BasicPxl / 2);
+		rect_.top = cy - (BasicPxl / 2);
+		rect_.right = cx + BasicPxl - (BasicPxl / 2);
+		rect_.bottom = cy + BasicPxl - (BasicPxl / 2);
 	}
 }STONE;
 
@@ -54,9 +54,8 @@ class GameObj : public Subject
 public:
 	virtual ~GameObj() {}
 protected:
-	STONE stone_;	//internal temporary variable
-	static std::vector<STONE> W_stn;
-	static std::vector<STONE> B_stn;
+	static STONE* last_stn;	//internal temporary variable
+	static std::vector<std::vector<STONE>> stone_pool;
 public:
 	virtual void Init() = 0;
 	virtual void Draw(HDC &hdc) = 0;

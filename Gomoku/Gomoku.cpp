@@ -7,7 +7,7 @@
 
 #ifdef _DEBUG
 #ifdef UNICODE
-#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console") 
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 #else
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console") 
 #endif
@@ -23,6 +23,7 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름�
 GoCenter* GC;
 Renderer* R;
 HWND g_hwnd;
+Client client = Client("127.0.0.1", 8000);
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -57,7 +58,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	R = new Renderer;
 	R->Init();
 	GC->Init();
-    
+	client.Connect();
 	// 기본 메시지 루프입니다:
 	while (msg.message != WM_QUIT)
 	{
@@ -71,6 +72,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		{
 			GC->Update();
 			R->Render();
+			if (GC->HasMessage())
+			{
+				client.SendStruct(GC->GetPacket());
+				PACKET p;
+				GC->SetPacket(p);
+			}
 		}
 	}
 	GC->Release();
@@ -117,19 +124,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	/////////// 변수 선언///////////{
-	static TCHAR szBuff[64];
-	TRACKMOUSEEVENT tme;
-	static BOOL bIn = FALSE;
-	//static Client client("127.0.0.1", 8000);
-	RECT rectView;
-	///////////////////////////////}
     switch (message)
     {
 		case WM_CREATE:
 		{
 			MoveWindow(hWnd, 10, 10, 710, 710, TRUE);
-			GetClientRect(hWnd, &rectView);
 		}	break;
 		case WM_COMMAND:
 			{
@@ -147,23 +146,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					return DefWindowProc(hWnd, message, wParam, lParam);
 				}
 			}        break;
-		/*case WM_LBUTTONDOWN:
+		case WM_ASYNC:
 		{
-			POINT pt;
-			GetCursorPos(&pt);
-			ScreenToClient(hWnd, &pt);
-			wsprintf(szBuff, _T("=== 마우스 좌표 :: X : %d / Y : %d ==="), pt.x, pt.y);
-			GC->GetInputPos(pt);
-			InvalidateRgn(hWnd, NULL, TRUE);
-		}	break;*/
-		case WM_PAINT:
-			{
-				PAINTSTRUCT ps;
-				HDC hdc = BeginPaint(hWnd, &ps);
-				// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-				//TextOut(hdc, 10, 620, szBuff, _tcslen(szBuff));
-				EndPaint(hWnd, &ps);
-			}        break;
+			client.Run(lParam);
+			GC->SetPacket(client.GetPacket());
+		}	break;
 		case WM_GETMINMAXINFO:
 		{
 			((MINMAXINFO *)lParam)->ptMaxTrackSize.x = 700;
@@ -173,6 +160,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}	break;
 		case WM_DESTROY:
 		{
+			GC->EndMessagePopup();
+			client.Disconnect();
 			PostQuitMessage(0);
 		}	break;
 		default:

@@ -4,7 +4,7 @@ class GameObj;
 class Board : public GameObj
 {
 public:
-	Board();
+	Board() = default;
 	virtual ~Board();
 public:
 	virtual void Init();

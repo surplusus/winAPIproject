@@ -14,7 +14,7 @@ void GoCenter::Init()
 	board_ = new Board;
 	stones_ = new StoneMgr;
 	auto list_obj = GetGameObjects();
-	for (int i = 0; i < list_obj.size(); ++i)
+	for (int i = 0; i < 3; ++i)
 	{
 		list_obj[i]->Init();
 	}
@@ -22,22 +22,29 @@ void GoCenter::Init()
 
 void GoCenter::Update()
 {
+	if (isEnd)
+		PostMessage(g_hwnd, WM_DESTROY, 0, 0);
 	if (!Observer::is_all_initiated)
 		return;
-
+	// mouse
 	SetInputPos();
+
+	//클라이언트 선택 받으면
+	 //if (클라이언트돌선택)
+		stones_->TurnOnYou();
+
 	auto list_obj = GetGameObjects();
-	for (int i = 0; i < list_obj.size(); ++i)
+	for (int i = 0; i < 3; ++i)
 	{
 		list_obj[i]->Update();
 	}
-	inputPos_ = { 0,0 };
+	inputPos_ = { -1,-1 };
 }
 
 void GoCenter::Render(HDC& hdc)
 {
 	auto list_obj = GetGameObjects();
-	for (int i = 0; i < list_obj.size(); ++i)
+	for (int i = 0; i < 3; ++i)
 	{
 		list_obj[i]->Draw(hdc);
 	}
@@ -117,8 +124,26 @@ void GoCenter::onNotify(const Subject * entity, TYPE_EVENT event)
 	}	break;
 	case TYPE_EVENT::T_PUTSTONE:
 	{
+		rule_->SetLastBlackStone(stones_->LastBlackStone());
+		rule_->SetLastWhiteStone(stones_->LastWhiteStone());
 		if(rule_->Judge(stones_->GetCoordinate()))
 			stones_->TurnOnYou();
+	}	break;
+	case TYPE_EVENT::T_TURNBLACK:
+	{
+		cout << "검은돌 둘차례" << endl;
+	}	break;
+	case TYPE_EVENT::T_TURNWHITE:
+	{
+		cout << "흰돌 둘차례" << endl;
+	}	break;
+	case TYPE_EVENT::T_BLACKWIN:
+	{
+		EndSignal(BLACK);
+	}	break;
+	case TYPE_EVENT::T_WHITEWIN:
+	{
+		EndSignal(WHITE);
 	}	break;
 	default:
 		break;
@@ -145,4 +170,40 @@ std::vector<GameObj*> GoCenter::GetGameObjects()
 	list.push_back((GameObj*)stones_); 
 	list.push_back((GameObj*)rule_); 
 	return list;
+}
+
+void GoCenter::EndSignal(TYPE_COL win_stn_col)
+{
+	if (win_stn_col == BLACK)
+	{
+		isEnd = BLACK;
+		PostMessage(g_hwnd, WM_DESTROY, 0, 0);
+	}
+	if (win_stn_col == WHITE)
+	{
+		isEnd = WHITE;
+		PostMessage(g_hwnd, WM_DESTROY, 0, 0);
+	}
+}
+
+void GoCenter::EndMessagePopup()
+{
+	if (isEnd == BLACK)
+	{
+		MessageBox(g_hwnd, _T("흑이 이겼습니다!!"), _T("흑"), MB_OK);
+
+	}
+	if (isEnd == WHITE)
+	{
+		MessageBox(g_hwnd, _T("백이 이겼습니다!!"), _T("백"), MB_OK);
+	}
+}
+
+bool GoCenter::HasMessage()
+{
+	if (packet_.pos.x != -1 &&
+		packet_.pos.y != -1)
+		return true;
+	else
+		return false;
 }
