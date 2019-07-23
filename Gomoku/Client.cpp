@@ -6,7 +6,7 @@ using std::endl;
 using std::string;
 using std::to_string;
 using std::runtime_error;
-
+// ì„¤ë§ˆ ì—¬ê¸°ì„œ ë°”ë¡œ ìˆ˜ì •í• ìˆ˜ ìˆëŠ”ê±´ê°€....ëŒ€ë°•ë°•!!!
 Gomoku::Client::Client(const std::string & host, int port) : 
 	host_(host), port_(port), Socket_(-1), isRunning_(true)
 {
@@ -35,7 +35,7 @@ void Gomoku::Client::Connect()
 	serverAddress.sin_port = htons(port_);
 	inet_pton(AF_INET, host_.c_str(), &serverAddress.sin_addr.S_un.S_addr);
 
-	// ±³°ú¼­¿¡ ÀÖ´Â WSAAsyncSelect
+	// êµê³¼ì„œì— ìˆëŠ” WSAAsyncSelect
 	WSAAsyncSelect(Socket_, g_hwnd, WM_ASYNC, FD_READ);
 
 	if (connect(Socket_, (LPSOCKADDR)&serverAddress, sizeof(serverAddress)) == SOCKET_ERROR)
@@ -93,7 +93,7 @@ bool Gomoku::Client::SendStruct(PACKET packet)
 		return false;
 	}
 #ifdef _DEBUG
-	cout << "µ¥ÀÌÅÍ Àü¼Û ¿Ï·á" << endl;
+	cout << "ë°ì´í„° ì „ì†¡ ì™„ë£Œ" << endl;
 #endif // _DEBUG
 
 	return true;
@@ -110,7 +110,7 @@ PACKET Gomoku::Client::ReceiveStruct()
 		return PACKET();
 	if (msgLen == -1)
 	{
-		cout << "ÀÎÅÍ³İ ¸Ş½ÃÁö ¹Ş´Âµ¥ ¹®Á¦°¡ ÀÖ½À´Ï´Ù" << endl;
+		cout << "ì¸í„°ë„· ë©”ì‹œì§€ ë°›ëŠ”ë° ë¬¸ì œê°€ ìˆìŠµë‹ˆë‹¤" << endl;
 		return PACKET();
 	}
 #endif // _DEBUG
@@ -118,7 +118,7 @@ PACKET Gomoku::Client::ReceiveStruct()
 	packet_.buffer.buf = message;
 
 #ifdef _DEBUG
-	cout << "µ¥ÀÌÅÍ ¼ö½Å ¿Ï·á" << endl;
+	cout << "ë°ì´í„° ìˆ˜ì‹  ì™„ë£Œ" << endl;
 #endif // _DEBUG
 
 	return packet_;
